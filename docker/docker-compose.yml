@@ -34,6 +34,18 @@ services:
     environment:
       HOST_UID: ${HOST_UID}
       HOST_GID: ${HOST_GID}
+      
+  webserver: 
+    build: webserver
+    #image: registry.gitlab.koehn.com:443/bkoehn/diaspora-docker:latest
+    links:
+      - diaspora
+    ports:
+      - "443:443"
+    volumes:
+      - ../data/webserver/letsencrypt:/etc/letsencrypt
+      - ../data/webserver/diaspora.conf:/etc/apache2/sites-available/diaspora.conf
+      - ../data/diaspora/diaspora/:/var/www/diaspora
 
 volumes:
   postgres:
